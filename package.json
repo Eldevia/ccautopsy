@@ -1,0 +1,50 @@
+{
+  "name": "ccautopsy",
+  "version": "0.1.0",
+  "description": "Find out why your Claude Code usage quota disappeared: finds prompt-cache rebuilds in local transcripts and explains each one.",
+  "license": "MIT",
+  "author": "Elvinas Miltenis",
+  "type": "module",
+  "bin": {
+    "ccautopsy": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "claude-code",
+    "prompt-cache",
+    "tokens",
+    "usage",
+    "cli"
+  ],
+  "dependencies": {
+    "mri": "^1.2.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsup": "^9.0.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eldevia/ccautopsy.git"
+  },
+  "homepage": "https://github.com/Eldevia/ccautopsy#readme",
+  "bugs": {
+    "url": "https://github.com/Eldevia/ccautopsy/issues"
+  }
+}

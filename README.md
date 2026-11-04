@@ -4,7 +4,7 @@
 
 Claude Code bills (and counts against your usage window) every token it sends. Prompt caching makes a cached prefix roughly 10× cheaper to *read* than to *write*, so a session that keeps hitting the cache is cheap and a session that keeps rebuilding it burns your quota. Token counters like ccusage tell you *how many* tokens you used. `ccautopsy` reads the same local transcripts and answers the next question: **which turns rebuilt the cache, and what caused each one.**
 
-![ccautopsy --since 20d](docs/demo.gif)
+![ccautopsy --since 20d](https://raw.githubusercontent.com/Eldevia/ccautopsy/main/docs/demo.gif)
 
 No network, no telemetry, no writes. It only reads `~/.claude/projects/**/*.jsonl`.
 

@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 import { classify, ttlBefore, TTL_1H_MS, TTL_5M_MS } from '../src/classify.js';
 import { findForkCandidates, findRebuilds } from '../src/detect.js';
 import { loadSessions, parseSessionFile } from '../src/parse.js';
@@ -56,8 +56,8 @@ describe('classify', () => {
   ])('%s/%s -> %s (%s)', (dir, id, cause, confidence) => {
     const r = analyze(dir).rebuilds.filter((x) => x.sessionId === id);
     expect(r).toHaveLength(1);
-    expect(r[0]!.cause).toBe(cause);
-    expect(r[0]!.confidence).toBe(confidence);
+    expect<string>(r[0]!.cause).toBe(cause);
+    expect<string>(r[0]!.confidence).toBe(confidence);
   });
   it('flags a new session started while a sibling in the same cwd was warm as a fork', () => {
     const { rebuilds } = analyze('session-fork');

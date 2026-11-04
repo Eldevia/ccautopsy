@@ -17,10 +17,10 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "tsup",
-    "test": "vitest run",
+    "build": "bun build src/cli.ts --target=node --format=esm --packages=external --banner='#!/usr/bin/env node' --outfile=dist/cli.js",
+    "test": "bun test",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "bun run build && bun test"
   },
   "keywords": [
     "claude-code",
@@ -34,10 +34,9 @@
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
+    "@types/bun": "^1.4.4",
     "@types/node": "^26.6.6",
-    "tsup": "^9.0.0",
-    "typescript": "^7.0.2",
-    "vitest": "^5.1.0"
+    "typescript": "^7.0.2"
   },
   "repository": {
     "type": "git",

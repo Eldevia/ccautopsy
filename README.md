@@ -121,9 +121,9 @@ Tests use hand-written synthetic fixtures, one per cause, under `test/fixtures/`
 ## Development
 
 ```sh
-npm install
-npm run build      # tsup -> dist/cli.js
-npm test           # vitest
+bun install
+bun run build      # bun build -> dist/cli.js (runs on Node >= 20)
+bun test           # bun:test
 node dist/cli.js test/fixtures
 ```
 

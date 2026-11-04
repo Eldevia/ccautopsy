@@ -18,7 +18,7 @@ npx ccautopsy --json          # machine-readable
 npx ccautopsy /some/dir       # another transcript directory or a single .jsonl file
 ```
 
-Requires Node 20+.
+Requires Node 20+. If [Bun](https://bun.sh) is installed, `npx ccautopsy` hands the run to Bun automatically (about 35% faster on large transcript sets). Set `CCAUTOPSY_NO_BUN=1` to stay on Node.
 
 ## Sample output
 

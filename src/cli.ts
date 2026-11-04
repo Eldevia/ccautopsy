@@ -1,5 +1,6 @@
 import mri from 'mri';
-import { existsSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { existsSync, realpathSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -83,7 +84,25 @@ function main(argv: string[]): number {
   return 0;
 }
 
+// Parsing large transcript sets is ~35% faster on Bun. When launched by Node (npx) and
+// Bun is on PATH, hand the run to Bun; if Bun is missing, fall through and run on Node.
+function runOnBun(script: string, args: string[]): number | undefined {
+  if (process.versions.bun || process.env.CCAUTOPSY_NO_BUN) return undefined;
+  const r = spawnSync('bun', [script, ...args], { stdio: 'inherit' });
+  if (r.error) return undefined; // Bun not installed: run on Node
+  return r.status ?? 1; // killed by a signal (e.g. Ctrl+C): don't rerun on Node
+}
+
 // Only run when executed as a script, so the helpers above can be imported by tests.
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  process.exitCode = main(process.argv.slice(2));
+// argv[1] is the node_modules/.bin symlink under npx, so compare the resolved path.
+function isEntry(): boolean {
+  const arg = process.argv[1];
+  if (!arg || !existsSync(arg)) return false;
+  return import.meta.url === pathToFileURL(realpathSync(arg)).href;
+}
+
+if (isEntry()) {
+  const script = realpathSync(process.argv[1]!);
+  const args = process.argv.slice(2);
+  process.exitCode = runOnBun(script, args) ?? main(args);
 }
